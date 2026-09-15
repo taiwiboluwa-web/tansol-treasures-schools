@@ -18,18 +18,6 @@ const links = [
   ['Contact', '/contact'],
 ];
 
-const aboutLinks = [
-  ['Brief History', '/about/history'],
-  ['Vision & Mission', '/about/vision-mission'],
-  ["Proprietress' Desk", '/about/proprietress'],
-];
-
-const whyLinks = [
-  ['Core Values', '/why-us/core-values'],
-  ['Facilities', '/why-us/facilities'],
-  ['Achievements', '/why-us/achievements'],
-];
-
 function InstagramIcon() {
   return <svg aria-hidden="true" viewBox="0 0 24 24" className="size-5" fill="none" stroke="currentColor" strokeWidth="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".8" fill="currentColor" stroke="none"/></svg>;
 }
@@ -74,16 +62,9 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
             </div>
             <div>
               <p className="eyebrow text-[var(--muted)]">Explore</p>
-              <div className="mt-5 grid gap-3 text-sm">
-                <Link href="/about" className="hover:text-[var(--brand)]">About Us</Link>
-                {aboutLinks.map(([label, href]) => <Link key={href} href={href} className="pl-3 text-[13px] text-[var(--muted)] hover:text-[var(--brand)]">{label}</Link>)}
-                <Link href="/why-us" className="mt-1 hover:text-[var(--brand)]">Why Us</Link>
-                {whyLinks.map(([label, href]) => <Link key={href} href={href} className="pl-3 text-[13px] text-[var(--muted)] hover:text-[var(--brand)]">{label}</Link>)}
-                <Link href="/curriculum" className="mt-1 hover:text-[var(--brand)]">Curriculum</Link>
-                <Link href="/admission" className="hover:text-[var(--brand)]">Admission</Link>
-                <Link href="/gallery" className="hover:text-[var(--brand)]">Gallery</Link>
-                <Link href="/blog" className="hover:text-[var(--brand)]">Blog</Link>
-              </div>
+              <nav className="mt-5 grid gap-3 text-sm" aria-label="Footer navigation">
+                {links.slice(0, 6).map(([label, href]) => <Link key={href} href={href} className="transition hover:text-[var(--brand)]">{label}</Link>)}
+              </nav>
             </div>
             <div>
               <p className="eyebrow text-[var(--muted)]">Visit & connect</p>
