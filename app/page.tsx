@@ -84,7 +84,7 @@ export default function Home() {
             <p className="eyebrow text-[var(--gold)]">From the Proprietress&apos; Desk</p>
             <h2 className="display mt-4 max-w-4xl text-5xl leading-[.9] md:text-7xl">“Preparing children to confidently meet the challenges of life.”</h2>
           </div>
-          <Link href="/about/proprietress" className="rounded-full bg-[var(--brand)] px-6 py-3 font-bold text-white transition hover:bg-[var(--brand-dark)]">Read her message →</Link>
+          <Link href="/about/proprietress" className="rounded-full bg-[var(--brand)] px-6 py-3 font-bold !text-white transition hover:bg-[var(--brand-dark)]">Read her message →</Link>
         </div>
       </section>
 
