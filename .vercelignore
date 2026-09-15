@@ -1,0 +1,6 @@
+.github/
+docs/
+README.md
+.env.example
+npm-debug.log*
+.DS_Store
