@@ -94,7 +94,7 @@ export default function Home() {
             <p className="eyebrow text-[#ead8a9]">Admissions</p>
             <h2 className="display mt-5 max-w-2xl text-5xl leading-[.9] md:text-7xl">Give your child room to learn, grow and lead.</h2>
             <p className="mt-7 max-w-xl leading-7 text-white/75">Speak with Tansol Treasure School about admissions, programmes and the right next step for your child.</p>
-            <a href="https://wa.me/2348023201622?text=Hello%20Tansol%20Treasure%20School%2C%20I%20would%20like%20to%20make%20an%20enquiry%20about%20admission." target="_blank" rel="noreferrer" className="mt-8 inline-flex rounded-full bg-white px-7 py-3.5 font-bold text-white transition hover:-translate-y-0.5">Chat on WhatsApp ↗</a>
+            <a href="https://wa.me/2348023201622?text=Hello%20Tansol%20Treasure%20School%2C%20I%20would%20like%20to%20make%20an%20enquiry%20about%20admission." target="_blank" rel="noreferrer" className="mt-8 inline-flex rounded-full bg-white px-7 py-3.5 font-bold text-black transition hover:-translate-y-0.5">Chat on WhatsApp ↗</a>
           </div>
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
             <Link href="/curriculum" className="group rounded-[2rem] border border-[var(--line)] bg-white p-7 transition hover:-translate-y-1 hover:border-[var(--brand)]"><span className="eyebrow text-[var(--gold)]">01 / Curriculum</span><h3 className="display mt-3 text-3xl">Learning that connects knowledge to life.</h3><span className="mt-7 block font-bold text-[var(--brand)]">Explore curriculum →</span></Link>
