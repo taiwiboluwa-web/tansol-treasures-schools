@@ -29,6 +29,16 @@ const whyLinks = [
   ['Achievements', '/why-us/achievements'],
 ];
 
+function InstagramIcon() {
+  return <svg aria-hidden="true" viewBox="0 0 24 24" className="size-5" fill="none" stroke="currentColor" strokeWidth="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".8" fill="currentColor" stroke="none"/></svg>;
+}
+function FacebookIcon() {
+  return <svg aria-hidden="true" viewBox="0 0 24 24" className="size-5" fill="currentColor"><path d="M14.2 21v-8h2.7l.4-3.1h-3.1v-2c0-.9.3-1.5 1.6-1.5h1.7V3.6c-.3 0-1.3-.1-2.4-.1-2.4 0-4 1.5-4 4.1v2.3H8.4V13h2.7v8h3.1Z"/></svg>;
+}
+function TikTokIcon() {
+  return <svg aria-hidden="true" viewBox="0 0 24 24" className="size-5" fill="currentColor"><path d="M15.4 3c.3 1.9 1.4 3.1 3.3 3.3v3.1c-1.2 0-2.3-.3-3.3-.9v5.8c0 3.5-2.3 5.7-5.4 5.7-3 0-5.2-2.1-5.2-5 0-3.2 2.7-5.4 6-5.1v3.2c-1.6-.2-2.8.6-2.8 2 0 1.1.8 1.8 1.9 1.8 1.3 0 2.3-.9 2.3-2.6V3h3.2Z"/></svg>;
+}
+
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
@@ -36,47 +46,57 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <header className="border-b border-[var(--line)] bg-[var(--surface)]">
           <div className="page-shell flex min-h-20 items-center justify-between gap-8">
             <Link href="/" className="flex items-center gap-3" aria-label="Tansol Treasure School home">
-              <span className="grid size-10 place-items-center rounded-full bg-[var(--green)] text-sm font-bold text-white">T</span>
+              <span className="grid size-10 place-items-center rounded-full bg-[var(--brand)] text-sm font-bold text-white">T</span>
               <span><span className="block text-sm font-bold tracking-[.12em]">TANSOL TREASURE</span><span className="block text-[10px] uppercase tracking-[.24em] text-[var(--muted)]">School</span></span>
             </Link>
             <nav className="hidden items-center gap-6 lg:flex" aria-label="Primary navigation">
-              <Link href="/about" className="text-sm text-[var(--muted)] transition hover:text-[var(--green)]">About Us</Link>
-              <Link href="/why-us" className="text-sm text-[var(--muted)] transition hover:text-[var(--green)]">Why Us</Link>
-              {links.slice(2).map(([label, href]) => <Link key={href} href={href} className="text-sm text-[var(--muted)] transition hover:text-[var(--green)]">{label}</Link>)}
+              <Link href="/about" className="text-sm text-[var(--muted)] transition hover:text-[var(--brand)]">About Us</Link>
+              <Link href="/why-us" className="text-sm text-[var(--muted)] transition hover:text-[var(--brand)]">Why Us</Link>
+              {links.slice(2).map(([label, href]) => <Link key={href} href={href} className="text-sm text-[var(--muted)] transition hover:text-[var(--brand)]">{label}</Link>)}
             </nav>
-            <Link href="/portal" className="rounded-full bg-[var(--green)] px-5 py-3 text-sm font-bold text-white transition hover:-translate-y-0.5 hover:bg-[#103b2d]">School Portal</Link>
+            <Link href="/portal" className="rounded-full bg-[var(--brand)] px-5 py-3 text-sm font-bold text-white transition hover:-translate-y-0.5 hover:bg-[var(--brand-dark)]">School Portal</Link>
           </div>
         </header>
         {children}
         <footer className="mt-24 border-t border-[var(--line)] bg-[var(--surface)]">
-          <div className="page-shell grid gap-10 py-12 md:grid-cols-[1.3fr_.8fr_1fr]">
-            <div><p className="eyebrow text-[var(--gold)]">Tansol Treasure School</p><h2 className="display mt-3 max-w-md text-3xl">A school built around curiosity, character and capability.</h2></div>
+          <div className="page-shell grid gap-12 py-14 lg:grid-cols-[1.25fr_.75fr_1fr] lg:py-16">
+            <div>
+              <div className="flex items-center gap-3">
+                <span className="grid size-11 place-items-center rounded-full bg-[var(--brand)] text-base font-bold text-white">T</span>
+                <div><p className="text-sm font-bold tracking-[.12em]">TANSOL TREASURE</p><p className="text-[10px] uppercase tracking-[.24em] text-[var(--muted)]">School</p></div>
+              </div>
+              <h2 className="display mt-7 max-w-md text-4xl leading-tight">Growing confident learners for a changing world.</h2>
+              <p className="mt-5 max-w-md text-sm leading-7 text-[var(--muted)]">Quality education, character development and practical learning in Iyana Ipaja, Lagos.</p>
+            </div>
             <div>
               <p className="eyebrow text-[var(--muted)]">Explore</p>
-              <div className="mt-4 grid gap-2 text-sm text-[var(--muted)]">
-                <Link href="/about">About Us</Link>
-                {aboutLinks.map(([label, href]) => <Link key={href} href={href} className="pl-3 text-xs">{label}</Link>)}
-                <Link href="/why-us" className="mt-2">Why Us</Link>
-                {whyLinks.map(([label, href]) => <Link key={href} href={href} className="pl-3 text-xs">{label}</Link>)}
-                <Link href="/curriculum">Curriculum</Link><Link href="/admission">Admission</Link><Link href="/gallery">Gallery</Link><Link href="/blog">Blog</Link><Link href="/portal">School Portal</Link>
+              <div className="mt-5 grid gap-3 text-sm">
+                <Link href="/about" className="hover:text-[var(--brand)]">About Us</Link>
+                {aboutLinks.map(([label, href]) => <Link key={href} href={href} className="pl-3 text-[13px] text-[var(--muted)] hover:text-[var(--brand)]">{label}</Link>)}
+                <Link href="/why-us" className="mt-1 hover:text-[var(--brand)]">Why Us</Link>
+                {whyLinks.map(([label, href]) => <Link key={href} href={href} className="pl-3 text-[13px] text-[var(--muted)] hover:text-[var(--brand)]">{label}</Link>)}
+                <Link href="/curriculum" className="mt-1 hover:text-[var(--brand)]">Curriculum</Link>
+                <Link href="/admission" className="hover:text-[var(--brand)]">Admission</Link>
+                <Link href="/gallery" className="hover:text-[var(--brand)]">Gallery</Link>
+                <Link href="/blog" className="hover:text-[var(--brand)]">Blog</Link>
               </div>
             </div>
             <div>
-              <p className="eyebrow text-[var(--muted)]">Connect</p>
-              <div className="mt-4 grid gap-2 text-sm leading-6 text-[var(--muted)]">
+              <p className="eyebrow text-[var(--muted)]">Visit & connect</p>
+              <div className="mt-5 space-y-4 text-sm leading-6 text-[var(--muted)]">
                 <p>No 84 New Ipaja Road, Alagutan Bus Stop, Iyana Ipaja, Lagos</p>
-                <Link href="tel:+2348023201622" className="hover:text-[var(--green)]">+234 802 320 1622</Link>
-                <Link href="mailto:info@tansolschool.com.ng" className="break-all hover:text-[var(--green)]">info@tansolschool.com.ng</Link>
-                <div className="mt-3 flex flex-wrap gap-4">
-                  <a href="https://www.instagram.com/tansoltreasures_school/" target="_blank" rel="noreferrer" className="font-bold hover:text-[var(--green)]">Instagram</a>
-                  <a href="https://www.facebook.com/share/1L66n56gZt/" target="_blank" rel="noreferrer" className="font-bold hover:text-[var(--green)]">Facebook</a>
-                  <a href="https://www.tiktok.com/@tansoltreasures_school" target="_blank" rel="noreferrer" className="font-bold hover:text-[var(--green)]">TikTok</a>
+                <Link href="tel:+2348023201622" className="block font-bold text-[var(--ink)] hover:text-[var(--brand)]">+234 802 320 1622</Link>
+                <Link href="mailto:info@tansolschool.com.ng" className="block break-all font-bold text-[var(--ink)] hover:text-[var(--brand)]">info@tansolschool.com.ng</Link>
+                <div className="flex items-center gap-3 pt-2" aria-label="Tansol Treasure School social media">
+                  <a href="https://www.instagram.com/tansoltreasures_school/" target="_blank" rel="noreferrer" aria-label="Instagram" title="Instagram" className="grid size-10 place-items-center rounded-full border border-[var(--line)] text-[var(--brand)] transition hover:-translate-y-1 hover:border-[var(--brand)] hover:bg-[var(--brand)] hover:text-white"><InstagramIcon /></a>
+                  <a href="https://www.facebook.com/share/1L66n56gZt/" target="_blank" rel="noreferrer" aria-label="Facebook" title="Facebook" className="grid size-10 place-items-center rounded-full border border-[var(--line)] text-[var(--brand)] transition hover:-translate-y-1 hover:border-[var(--brand)] hover:bg-[var(--brand)] hover:text-white"><FacebookIcon /></a>
+                  <a href="https://www.tiktok.com/@tansoltreasures_school" target="_blank" rel="noreferrer" aria-label="TikTok" title="TikTok" className="grid size-10 place-items-center rounded-full border border-[var(--line)] text-[var(--brand)] transition hover:-translate-y-1 hover:border-[var(--brand)] hover:bg-[var(--brand)] hover:text-white"><TikTokIcon /></a>
                 </div>
-                <Link href="/contact" className="mt-2 font-bold text-[var(--green)]">Contact the school →</Link>
+                <Link href="/contact" className="inline-block pt-1 font-bold text-[var(--brand)] hover:text-[var(--brand-dark)]">Contact the school →</Link>
               </div>
             </div>
           </div>
-          <div className="border-t border-[var(--line)] py-5 text-center text-xs text-[var(--muted)]">© {new Date().getFullYear()} Tansol Treasure School. All rights reserved.</div>
+          <div className="border-t border-[var(--line)]"><div className="page-shell flex flex-col gap-2 py-5 text-xs text-[var(--muted)] sm:flex-row sm:items-center sm:justify-between"><p>© {new Date().getFullYear()} Tansol Treasure School. All rights reserved.</p><Link href="/portal" className="font-bold hover:text-[var(--brand)]">School Portal →</Link></div></div>
         </footer>
       </body>
     </html>
