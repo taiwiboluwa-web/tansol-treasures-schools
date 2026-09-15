@@ -3,7 +3,7 @@
 import { FormEvent, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
-type Student = { id: string; student_id: string; full_name: string; class_name: string };
+type Student = { id: string; student_id: string; full_name: string; class_name: string; user_id: string | null; email?: string | null };
 
 export default function StaffWorkspace({ fullName, role }: { fullName: string; role: string }) {
   const router = useRouter();
@@ -12,16 +12,37 @@ export default function StaffWorkspace({ fullName, role }: { fullName: string; r
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [showPupilForm, setShowPupilForm] = useState(false);
+  const [pupil, setPupil] = useState({ fullName: '', studentId: '', className: '', dateOfBirth: '', guardianName: '' });
   const [result, setResult] = useState({ session: '2025/2026', term: 'First Term', subject: '', ca: '', exam: '', remark: '' });
   const [attendance, setAttendance] = useState({ date: new Date().toISOString().slice(0, 10), status: 'present' });
 
-  useEffect(() => {
-    fetch('/api/staff/records', { cache: 'no-store' })
-      .then((response) => response.json())
-      .then((data) => setStudents(data.students || []))
-      .catch(() => setMessage('Could not load pupils.'))
-      .finally(() => setLoading(false));
-  }, []);
+  async function loadStudents() {
+    try {
+      const response = await fetch('/api/staff/records', { cache: 'no-store' });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.error);
+      setStudents(data.students || []);
+    } catch { setMessage('Could not load pupils.'); }
+    finally { setLoading(false); }
+  }
+
+  useEffect(() => { loadStudents(); }, []);
+
+  async function createPupil(e: FormEvent) {
+    e.preventDefault();
+    setSaving(true); setMessage('');
+    try {
+      const response = await fetch('/api/staff/records', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ type: 'pupil', ...pupil }) });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.error || 'Could not create pupil.');
+      setMessage(`Pupil profile created: ${data.studentId}. Login credentials can now be linked by the administrator.`);
+      setPupil({ fullName: '', studentId: '', className: '', dateOfBirth: '', guardianName: '' });
+      setShowPupilForm(false);
+      await loadStudents();
+    } catch (error) { setMessage(error instanceof Error ? error.message : 'Could not create pupil.'); }
+    finally { setSaving(false); }
+  }
 
   async function save(type: 'result' | 'attendance', e: FormEvent) {
     e.preventDefault();
@@ -50,7 +71,7 @@ export default function StaffWorkspace({ fullName, role }: { fullName: string; r
         <div>
           <p className="eyebrow text-[var(--gold)]">Staff portal</p>
           <h1 className="display mt-4 text-6xl leading-none md:text-8xl">Teaching, organised.</h1>
-          <p className="mt-5 max-w-2xl leading-7 text-[var(--muted)]">Welcome {fullName}. Enter academic results and attendance without accessing administrative controls.</p>
+          <p className="mt-5 max-w-2xl leading-7 text-[var(--muted)]">Welcome {fullName}. Create pupil profiles, enter academic results and record attendance.</p>
         </div>
         <button type="button" onClick={logout} className="rounded-full border border-[var(--line)] bg-[var(--surface)] px-5 py-3 text-sm font-bold text-[var(--brand)]">Log out</button>
       </div>
@@ -63,6 +84,16 @@ export default function StaffWorkspace({ fullName, role }: { fullName: string; r
             <option value="">{loading ? 'Loading pupils…' : 'Select pupil'}</option>
             {students.map((student) => <option key={student.id} value={student.id}>{student.full_name} · {student.student_id} · {student.class_name}</option>)}
           </select>
+          <div className="mt-7 border-t border-[var(--line)] pt-7">
+            <button type="button" onClick={() => setShowPupilForm((v) => !v)} className="rounded-full bg-[var(--brand)] px-5 py-3 text-sm font-bold text-white">{showPupilForm ? 'Close pupil form' : 'Create pupil profile'}</button>
+            {showPupilForm && <form onSubmit={createPupil} className="mt-6 space-y-4">
+              {[
+                ['Full name', 'fullName'], ['Student ID', 'studentId'], ['Class', 'className'], ['Date of birth', 'dateOfBirth'], ['Guardian name', 'guardianName']
+              ].map(([label, key]) => <label key={key} className="block"><span className="text-xs font-bold uppercase tracking-[.14em] text-[var(--muted)]">{label}</span><input value={pupil[key as keyof typeof pupil]} onChange={(e) => setPupil({ ...pupil, [key]: e.target.value })} type={key === 'dateOfBirth' ? 'date' : 'text'} required={['fullName', 'studentId', 'className'].includes(key)} className="mt-2 w-full border-b border-[var(--line)] bg-transparent py-3 outline-none focus:border-[var(--brand)]" /></label>)}
+              <p className="text-xs leading-5 text-[var(--muted)]">This creates the pupil profile only. The administrator will later attach the pupil's email and password.</p>
+              <button disabled={saving} className="rounded-full border border-[var(--line)] px-5 py-3 text-sm font-bold text-[var(--brand)]">{saving ? 'Creating…' : 'Save pupil profile'}</button>
+            </form>}
+          </div>
           {role === 'admin' && <p className="mt-6 text-sm text-[var(--muted)]">You are signed in as an administrator. Full administrative tools remain available at the admin portal.</p>}
         </aside>
 
