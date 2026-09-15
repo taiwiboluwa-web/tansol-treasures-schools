@@ -7,11 +7,11 @@ export async function GET() {
   const s = await getSession();
   if (!s || s.role !== 'admin') return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   const rows = await queryNeon(`
-    SELECT s.id, s.student_id, s.class_name, s.date_of_birth, s.guardian_name,
-           s.user_id, u.full_name, u.email
+    SELECT s.id, s.student_id, s.full_name, s.class_name, s.date_of_birth, s.guardian_name,
+           s.user_id, u.email
     FROM students s
     LEFT JOIN users u ON u.id = s.user_id
-    ORDER BY COALESCE(u.full_name, s.student_id)
+    ORDER BY s.full_name, s.student_id
   `);
   return NextResponse.json({ students: rows });
 }
@@ -34,7 +34,7 @@ export async function POST(req: Request) {
       const password = String(b.password || '');
       if (!studentId || !email || password.length < 6) return NextResponse.json({ error: 'Email and a password of at least 6 characters are required.' }, { status: 400 });
 
-      const existing = await queryNeon<{ user_id: string | null; full_name: string }>(`SELECT s.user_id, COALESCE(u.full_name, '') AS full_name FROM students s LEFT JOIN users u ON u.id=s.user_id WHERE s.id=$1 LIMIT 1`, [studentId]);
+      const existing = await queryNeon<{ user_id: string | null; full_name: string }>(`SELECT user_id, full_name FROM students WHERE id=$1 LIMIT 1`, [studentId]);
       if (!existing.length) return NextResponse.json({ error: 'Pupil profile not found.' }, { status: 404 });
       if (existing[0].user_id) return NextResponse.json({ error: 'This pupil already has login credentials. Use the existing student account to reset them.' }, { status: 409 });
 
@@ -49,7 +49,7 @@ export async function POST(req: Request) {
          SET user_id=(SELECT id FROM new_user)
          WHERE id=$4 AND user_id IS NULL
          RETURNING user_id`,
-        [email, hash, existing[0].full_name || 'Student', studentId]
+        [email, hash, existing[0].full_name, studentId]
       );
       if (!linked.length) return NextResponse.json({ error: 'Could not link the pupil login.' }, { status: 400 });
       return NextResponse.json({ ok: true });
@@ -63,7 +63,7 @@ export async function POST(req: Request) {
     if (!fullName || !pupilStudentId || !email || password.length < 6 || !className) return NextResponse.json({ error: 'Name, student ID, email, class and a password of at least 6 characters are required.' }, { status: 400 });
     const hash = await bcrypt.hash(password, 12);
     const users = await queryNeon<{ id: string }>(`INSERT INTO users(email,password_hash,role,full_name) VALUES($1,$2,'student',$3) RETURNING id`, [email, hash, fullName]);
-    await queryNeon(`INSERT INTO students(student_id,user_id,class_name,date_of_birth,guardian_name) VALUES($1,$2,$3,$4,$5)`, [pupilStudentId, users[0].id, className, b.dateOfBirth || null, b.guardianName || null]);
+    await queryNeon(`INSERT INTO students(full_name,student_id,user_id,class_name,date_of_birth,guardian_name) VALUES($1,$2,$3,$4,$5,$6)`, [fullName, pupilStudentId, users[0].id, className, b.dateOfBirth || null, b.guardianName || null]);
     return NextResponse.json({ ok: true, studentId: pupilStudentId });
   } catch (e) {
     const message = String(e).includes('duplicate') || String(e).includes('unique') ? 'Student ID or email already exists.' : 'Unable to save the record.';
