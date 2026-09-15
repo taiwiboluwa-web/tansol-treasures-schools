@@ -1,0 +1,5 @@
+CREATE TABLE IF NOT EXISTS attendance (id UUID PRIMARY KEY DEFAULT uuid_generate_v4(), student_id UUID NOT NULL REFERENCES students(id) ON DELETE CASCADE, attendance_date DATE NOT NULL, status VARCHAR(20) NOT NULL CHECK (status IN ('present','absent','late')), recorded_by UUID NOT NULL REFERENCES users(id), created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP, UNIQUE(student_id, attendance_date));
+CREATE INDEX IF NOT EXISTS idx_attendance_student_date ON attendance(student_id, attendance_date);
+
+CREATE TABLE IF NOT EXISTS billing_items (id UUID PRIMARY KEY DEFAULT uuid_generate_v4(), student_id UUID NOT NULL REFERENCES students(id) ON DELETE CASCADE, session VARCHAR(50) NOT NULL, term VARCHAR(50) NOT NULL, description VARCHAR(255) NOT NULL, amount NUMERIC(12,2) NOT NULL CHECK (amount >= 0), due_date DATE, amount_paid NUMERIC(12,2) NOT NULL DEFAULT 0 CHECK (amount_paid >= 0 AND amount_paid <= amount), created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP);
+CREATE INDEX IF NOT EXISTS idx_billing_student_term ON billing_items(student_id, session, term);
