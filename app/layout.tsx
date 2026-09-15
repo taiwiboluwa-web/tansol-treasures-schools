@@ -47,7 +47,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
               <Link href="/why-us" className="text-sm text-[var(--muted)] transition hover:text-[var(--brand)]">Why Us</Link>
               {links.slice(2).map(([label, href]) => <Link key={href} href={href} className="text-sm text-[var(--muted)] transition hover:text-[var(--brand)]">{label}</Link>)}
             </nav>
-            <Link href="/portal" className="rounded-full bg-[var(--brand)] px-5 py-3 text-sm font-bold text-white transition hover:-translate-y-0.5 hover:bg-[var(--brand-dark)]">School Portal</Link>
+            <Link href="/portal" className="rounded-full bg-[var(--brand)] px-5 py-3 text-sm font-bold !text-white transition hover:-translate-y-0.5 hover:bg-[var(--brand-dark)]">School Portal</Link>
           </div>
         </header>
         {children}
@@ -82,7 +82,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
               </div>
             </div>
           </div>
-          <div className="border-t border-[var(--line)]"><div className="page-shell flex flex-col gap-2 py-5 text-xs text-[var(--muted)] sm:flex-row sm:items-center sm:justify-between"><p>© {new Date().getFullYear()} Tansol Treasure School. All rights reserved. Established 2009.</p><Link href="/portal" className="font-bold hover:text-[var(--brand)]">School Portal →</Link></div></div>
+          <div className="border-t border-white/15 bg-[var(--brand-dark)] text-white"><div className="page-shell flex flex-col gap-2 py-5 text-xs text-white/75 sm:flex-row sm:items-center sm:justify-between"><p>© {new Date().getFullYear()} Tansol Treasure School. All rights reserved. Established 2009.</p><Link href="/portal" className="font-bold !text-white hover:text-white/80">School Portal →</Link></div></div>
         </footer>
       </body>
     </html>
