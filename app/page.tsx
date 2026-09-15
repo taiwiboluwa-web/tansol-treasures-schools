@@ -38,7 +38,7 @@ export default function Home() {
               <div className="absolute left-7 top-7 rounded-full bg-white px-4 py-2 text-xs font-black uppercase tracking-[.18em] text-[var(--brand)]">Tansol Treasure School</div>
               <div className="absolute bottom-8 left-8 right-8 rounded-[2rem] bg-white/90 p-7 backdrop-blur-sm">
                 <p className="eyebrow text-[var(--gold)]">Our promise</p>
-                <p className="display mt-2 text-4xl leading-none text-[var(--brand)]">Every child is seen, challenged & prepared.</p>
+                <p className="display mt-2 text-4xl leading-none text-[var(--brand)]">Every child is seen, challenged &amp; prepared.</p>
               </div>
             </div>
             <div className="absolute -bottom-2 right-0 z-10 max-w-[230px] rotate-[3deg] rounded-[1.75rem] bg-white p-5 shadow-xl">
@@ -81,7 +81,7 @@ export default function Home() {
       <section className="bg-[#f1eadf] py-24">
         <div className="page-shell grid items-end gap-10 lg:grid-cols-[1fr_auto]">
           <div>
-            <p className="eyebrow text-[var(--gold)]">From the Proprietress' Desk</p>
+            <p className="eyebrow text-[var(--gold)]">From the Proprietress&apos; Desk</p>
             <h2 className="display mt-4 max-w-4xl text-5xl leading-[.9] md:text-7xl">“Preparing children to confidently meet the challenges of life.”</h2>
           </div>
           <Link href="/about/proprietress" className="rounded-full bg-[var(--brand)] px-6 py-3 font-bold text-white transition hover:bg-[var(--brand-dark)]">Read her message →</Link>
