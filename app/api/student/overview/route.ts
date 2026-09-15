@@ -1,0 +1,4 @@
+import { NextResponse } from 'next/server';
+import { getSession } from '@/lib/auth/server';
+import { queryNeon } from '@/lib/db/client';
+export async function GET(){const s=await getSession();if(!s||s.role!=='student')return NextResponse.json({error:'Unauthorized'},{status:401});const rows=await queryNeon<{id:string;student_id:string;class_name:string}>(`SELECT id,student_id,class_name FROM students WHERE user_id=$1`,[s.userId]);if(!rows[0])return NextResponse.json({error:'Student profile not linked.'},{status:404});const id=rows[0].id;const attendance=await queryNeon(`SELECT attendance_date,status FROM attendance WHERE student_id=$1 ORDER BY attendance_date DESC LIMIT 100`,[id]);const billing=await queryNeon(`SELECT id,session,term,description,amount,amount_paid,due_date FROM billing_items WHERE student_id=$1 ORDER BY created_at DESC`,[id]);return NextResponse.json({student:rows[0],attendance,billing});}
