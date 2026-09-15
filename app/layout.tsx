@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import schoolLogo from './gallery/Tansol school.png';
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -40,7 +41,7 @@ function TikTokIcon() {
 }
 
 function SchoolLogo({ className = 'h-11 w-auto' }: { className?: string }) {
-  return <img src="/gallery/Tansol%20school.png" alt="Tansol Treasure School logo" className={`${className} object-contain`} />;
+  return <img src={schoolLogo.src} alt="Tansol Treasure School logo" className={`${className} object-contain`} />;
 }
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
