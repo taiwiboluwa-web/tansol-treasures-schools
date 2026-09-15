@@ -1,12 +1,14 @@
 @import "tailwindcss";
 
 :root {
-  --ink: #142018;
-  --muted: #66716a;
-  --paper: #f5f2ea;
-  --surface: #fffdf8;
-  --line: #d9d8cf;
-  --green: #174c3a;
+  --ink: #17121f;
+  --muted: #6d6875;
+  --paper: #f7f4fa;
+  --surface: #ffffff;
+  --line: #e4dfe9;
+  --brand: #3c1077;
+  --brand-dark: #2b0759;
+  --brand-soft: #f0e9f8;
   --gold: #c89b3c;
   --display: Georgia, 'Times New Roman', serif;
   --sans: Arial, Helvetica, sans-serif;
@@ -22,7 +24,7 @@ body {
 }
 a { color: inherit; text-decoration: none; }
 button, input, select, textarea { font: inherit; }
-::selection { background: #d8c28d; color: var(--ink); }
+::selection { background: #d8c8e7; color: var(--ink); }
 
 .display { font-family: var(--display); letter-spacing: -0.035em; }
 .eyebrow { text-transform: uppercase; letter-spacing: .16em; font-size: .7rem; font-weight: 700; }
