@@ -90,7 +90,7 @@ export default function StaffWorkspace({ fullName, role }: { fullName: string; r
               {[
                 ['Full name', 'fullName'], ['Student ID', 'studentId'], ['Class', 'className'], ['Date of birth', 'dateOfBirth'], ['Guardian name', 'guardianName']
               ].map(([label, key]) => <label key={key} className="block"><span className="text-xs font-bold uppercase tracking-[.14em] text-[var(--muted)]">{label}</span><input value={pupil[key as keyof typeof pupil]} onChange={(e) => setPupil({ ...pupil, [key]: e.target.value })} type={key === 'dateOfBirth' ? 'date' : 'text'} required={['fullName', 'studentId', 'className'].includes(key)} className="mt-2 w-full border-b border-[var(--line)] bg-transparent py-3 outline-none focus:border-[var(--brand)]" /></label>)}
-              <p className="text-xs leading-5 text-[var(--muted)]">This creates the pupil profile only. The administrator will later attach the pupil's email and password.</p>
+              <p className="text-xs leading-5 text-[var(--muted)]">This creates the pupil profile only. The administrator will later attach the pupil&apos;s email and password.</p>
               <button disabled={saving} className="rounded-full border border-[var(--line)] px-5 py-3 text-sm font-bold text-[var(--brand)]">{saving ? 'Creating…' : 'Save pupil profile'}</button>
             </form>}
           </div>
