@@ -39,15 +39,18 @@ function TikTokIcon() {
   return <svg aria-hidden="true" viewBox="0 0 24 24" className="size-5" fill="currentColor"><path d="M15.4 3c.3 1.9 1.4 3.1 3.3 3.3v3.1c-1.2 0-2.3-.3-3.3-.9v5.8c0 3.5-2.3 5.7-5.4 5.7-3 0-5.2-2.1-5.2-5 0-3.2 2.7-5.4 6-5.1v3.2c-1.6-.2-2.8.6-2.8 2 0 1.1.8 1.8 1.9 1.8 1.3 0 2.3-.9 2.3-2.6V3h3.2Z"/></svg>;
 }
 
+function SchoolLogo({ className = 'h-11 w-auto' }: { className?: string }) {
+  return <img src="/gallery/Tansol%20school.png" alt="Tansol Treasure School logo" className={`${className} object-contain`} />;
+}
+
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
       <body>
         <header className="border-b border-[var(--line)] bg-[var(--surface)]">
           <div className="page-shell flex min-h-20 items-center justify-between gap-8">
-            <Link href="/" className="flex items-center gap-3" aria-label="Tansol Treasure School home">
-              <span className="grid size-10 place-items-center rounded-full bg-[var(--brand)] text-sm font-bold text-white">T</span>
-              <span><span className="block text-sm font-bold tracking-[.12em]">TANSOL TREASURE</span><span className="block text-[10px] uppercase tracking-[.24em] text-[var(--muted)]">School</span></span>
+            <Link href="/" className="flex min-w-0 items-center" aria-label="Tansol Treasure School home">
+              <SchoolLogo className="h-12 w-auto max-w-[190px] sm:h-14" />
             </Link>
             <nav className="hidden items-center gap-6 lg:flex" aria-label="Primary navigation">
               <Link href="/about" className="text-sm text-[var(--muted)] transition hover:text-[var(--brand)]">About Us</Link>
@@ -61,11 +64,11 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <footer className="mt-24 border-t border-[var(--line)] bg-[var(--surface)]">
           <div className="page-shell grid gap-12 py-14 lg:grid-cols-[1.25fr_.75fr_1fr] lg:py-16">
             <div>
-              <div className="flex items-center gap-3">
-                <span className="grid size-11 place-items-center rounded-full bg-[var(--brand)] text-base font-bold text-white">T</span>
-                <div><p className="text-sm font-bold tracking-[.12em]">TANSOL TREASURE</p><p className="text-[10px] uppercase tracking-[.24em] text-[var(--muted)]">School</p></div>
+              <div className="flex items-center">
+                <SchoolLogo className="h-14 w-auto max-w-[220px]" />
               </div>
-              <h2 className="display mt-7 max-w-md text-4xl leading-tight">Growing confident learners for a changing world.</h2>
+              <p className="eyebrow mt-4 text-[var(--gold)]">Established 2009</p>
+              <h2 className="display mt-5 max-w-md text-4xl leading-tight">Growing confident learners for a changing world.</h2>
               <p className="mt-5 max-w-md text-sm leading-7 text-[var(--muted)]">Quality education, character development and practical learning in Iyana Ipaja, Lagos.</p>
             </div>
             <div>
@@ -96,7 +99,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
               </div>
             </div>
           </div>
-          <div className="border-t border-[var(--line)]"><div className="page-shell flex flex-col gap-2 py-5 text-xs text-[var(--muted)] sm:flex-row sm:items-center sm:justify-between"><p>© {new Date().getFullYear()} Tansol Treasure School. All rights reserved.</p><Link href="/portal" className="font-bold hover:text-[var(--brand)]">School Portal →</Link></div></div>
+          <div className="border-t border-[var(--line)]"><div className="page-shell flex flex-col gap-2 py-5 text-xs text-[var(--muted)] sm:flex-row sm:items-center sm:justify-between"><p>© {new Date().getFullYear()} Tansol Treasure School. All rights reserved. Established 2009.</p><Link href="/portal" className="font-bold hover:text-[var(--brand)]">School Portal →</Link></div></div>
         </footer>
       </body>
     </html>
