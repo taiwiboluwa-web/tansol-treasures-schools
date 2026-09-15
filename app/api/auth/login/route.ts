@@ -7,12 +7,15 @@ import { loginSchema } from '@/lib/validation';
 
 export async function POST(request: Request) {
   try {
-    const body = await request.json();
-    const parsed = loginSchema.safeParse(body);
+    const parsed = loginSchema.safeParse(await request.json());
     if (!parsed.success) return NextResponse.json({ error: 'Invalid credentials.' }, { status: 400 });
 
     const users = await queryNeon<{ id:string; password_hash:string; role:'admin'|'staff'|'parent'|'student'; full_name:string }>(
-      'SELECT id, password_hash, role, full_name FROM users WHERE lower(email) = lower($1) LIMIT 1',
+      `SELECT u.id, u.password_hash, u.role, u.full_name
+       FROM users u
+       LEFT JOIN students s ON s.user_id = u.id
+       WHERE lower(u.email) = lower($1) OR lower(s.student_id) = lower($1)
+       LIMIT 1`,
       [parsed.data.identifier]
     );
     const user = users[0];
