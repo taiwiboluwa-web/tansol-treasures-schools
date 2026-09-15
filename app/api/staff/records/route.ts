@@ -26,9 +26,9 @@ export async function POST(req: Request) {
       const className = String(b.className || '').trim();
       if (!fullName || !studentId || !className) return NextResponse.json({ error: 'Pupil name, student ID and class are required.' }, { status: 400 });
       await queryNeon(
-        `INSERT INTO students(student_id,user_id,class_name,date_of_birth,guardian_name)
-         VALUES($1,NULL,$2,$3,$4)`,
-        [studentId, className, b.dateOfBirth || null, b.guardianName || null]
+        `INSERT INTO students(full_name,student_id,user_id,class_name,date_of_birth,guardian_name)
+         VALUES($1,$2,NULL,$3,$4,$5)`,
+        [fullName, studentId, className, b.dateOfBirth || null, b.guardianName || null]
       );
       return NextResponse.json({ ok: true, studentId });
     }
