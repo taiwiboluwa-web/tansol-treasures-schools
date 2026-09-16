@@ -14,7 +14,10 @@ export async function POST(request: Request) {
       `SELECT u.id, u.password_hash, u.role, u.full_name
        FROM users u
        LEFT JOIN students s ON s.user_id = u.id
-       WHERE lower(u.email) = lower($1) OR lower(s.student_id) = lower($1)
+       LEFT JOIN staff_profiles sp ON sp.user_id = u.id
+       WHERE lower(u.email) = lower($1)
+          OR lower(s.student_id) = lower($1)
+          OR lower(sp.staff_id) = lower($1)
        LIMIT 1`,
       [parsed.data.identifier]
     );
